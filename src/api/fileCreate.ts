@@ -5,6 +5,7 @@ interface SendFileCreatePayload {
   filename: string;
   timestamp: string;
   operation: "CREATE";
+  repoUrl: string | null;
 }
 
 export const sendFileCreateAPI = async (payload: SendFileCreatePayload) => {

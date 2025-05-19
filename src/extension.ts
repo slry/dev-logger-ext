@@ -5,6 +5,7 @@ import { useLoc } from "./hooks/useLoc";
 import { useFileDelete } from "./hooks/useFileDelete";
 import { useFileCreate } from "./hooks/useFileCreate";
 import { TimeTracker } from "./timetracker";
+import { useGitlabRepos } from "./hooks/useGitlabRepos";
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -15,6 +16,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   const timeTracker = new TimeTracker();
 
+  useGitlabRepos(context);
   useLoc(context);
   useFileCreate(context);
   useFileDelete(context);

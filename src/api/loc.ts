@@ -4,6 +4,7 @@ import { baseApi } from "./baseApi";
 export interface SendLocPayload {
   changes: { file: string; added: number; deleted: number }[];
   timestamp: string;
+  repoUrl: string | null;
 }
 export const sendLocAPI = async (payload: SendLocPayload) => {
   try {

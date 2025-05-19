@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import { sendTimeSpentAPI } from './api/time';
+import { getGitRepo } from './lib/getGitRepo';
 
 enum TimeTrackerState {
   IDLE = 'IDLE',
@@ -36,9 +37,12 @@ export class TimeTracker {
 
       const duration = currentTime - this.startTime;
 
+      const currentRepoUrl = getGitRepo();
+
       sendTimeSpentAPI({
         timestamp: new Date().toISOString(),
         time: duration,
+        repoUrl: currentRepoUrl || null,
       });
 
       this.startTime = currentTime;

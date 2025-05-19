@@ -5,6 +5,7 @@ interface SendFileDeletePayload {
   filename: string;
   timestamp: string;
   operation: "DELETE";
+  repoUrl: string | null;
 }
 
 export const sendFileDeleteAPI = async (payload: SendFileDeletePayload) => {

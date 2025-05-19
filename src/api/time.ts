@@ -4,6 +4,7 @@ import { baseApi } from "./baseApi";
 interface SendTimeSpentPayload {
   timestamp: string;
   time: number;
+  repoUrl: string | null;
 }
 
 export const sendTimeSpentAPI = async (payload: SendTimeSpentPayload) => {

@@ -1,12 +1,14 @@
 import * as vscode from "vscode";
 import { sendLocAPI, SendLocPayload } from "../api/loc";
 import { getRelativeWorkspaceFilePath } from "../lib/getRelativeWorkspaceFilePath";
+import { getGitRepo } from "../lib/getGitRepo";
 
 const fileChangesQueue: SendLocPayload["changes"] = [];
 let batchTimer: NodeJS.Timeout | null = null;
 
 export const useLoc = (context: vscode.ExtensionContext) => {
   const fileLineCounts = new Map<string, number>();
+  const disposables: vscode.Disposable[] = [];
 
   // Track initial line count for all open documents
   vscode.workspace.textDocuments.forEach((document) => {
@@ -17,15 +19,15 @@ export const useLoc = (context: vscode.ExtensionContext) => {
 
   vscode.workspace.onDidOpenTextDocument((document) => {
     trackInitialLineCount(document, fileLineCounts);
-  });
+  }, null, disposables);
 
   vscode.workspace.onDidChangeTextDocument((event) => {
     trackLineChanges(event, fileLineCounts);
-  });
+  }, null, disposables);
 
   vscode.workspace.onDidCloseTextDocument((document) => {
     fileLineCounts.delete(document.uri.fsPath);
-  });
+  }, null, disposables);
 
   // Send batch data when extension is deactivated
   context.subscriptions.push({
@@ -33,6 +35,8 @@ export const useLoc = (context: vscode.ExtensionContext) => {
       sendLocBatchData();
     },
   });
+
+  context.subscriptions.push(...disposables);
 };
 
 function trackInitialLineCount(
@@ -74,9 +78,12 @@ async function sendLocBatchData() {
     return;
   }
 
+  const repoUrl = getGitRepo();
+
   const payload = {
     changes: fileChangesQueue,
     timestamp: new Date().toISOString(),
+    repoUrl: repoUrl || null,
   } satisfies SendLocPayload;
 
   console.log("Sending batch data ", payload.timestamp);
