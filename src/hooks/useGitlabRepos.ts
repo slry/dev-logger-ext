@@ -6,8 +6,6 @@ export const useGitlabRepos = async (context: vscode.ExtensionContext) => {
     const gitlabRepos = await getGitlabRepos();
 
     context.globalState.update("gitlabRepos", gitlabRepos);
-
-    console.log("GitLab Repositories:", gitlabRepos);
   };
 
   const disposable = vscode.workspace.onDidChangeConfiguration(fetchGitlabRepos);
