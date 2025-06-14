@@ -28,7 +28,7 @@ After installing the extension, open VSCode settings and look for:
 
 ```
 
-Dev Logger › Api Url: [http://localhost:3000/api/send](http://localhost:3000/api/send)
+Dev Logger › Api Url: http://localhost:3000
 Dev Logger › Api Token: your-api-token
 
 ````
@@ -44,8 +44,8 @@ These correspond to the values you configure in your self-hosted Dev Logger dash
 Download from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/) or manually:
 
 ```bash
-git clone https://github.com/slry/dev-logger.git
-cd dev-logger/extension
+git clone https://github.com/slry/dev-logger-ext.git
+cd dev-logger
 pnpm install
 pnpm run package
 ````
