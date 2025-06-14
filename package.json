@@ -4,13 +4,14 @@
   "publisher": "rybco",
   "description": "",
   "version": "0.0.1",
+  "icon": "images/icon.png",
+  "repository": "github:slry/dev-logger-ext",
   "engines": {
     "vscode": "^1.97.0"
   },
   "categories": [
     "Other"
   ],
-  "icon": "images/icon.png",
   "activationEvents": [
     "onLanguage"
   ],
